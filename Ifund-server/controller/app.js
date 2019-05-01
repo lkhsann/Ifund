@@ -35,4 +35,24 @@ app.get('/api/project', function (req, res) {
     })
 })
 
+var tb_user = require('../model/tb_user');
+
+app.post('/api/tb_user', urlencodedParser, jsonParser, function (req, res) {
+    var useremail = req.body.useremail;
+    var username = req.body.username;
+    var userpass = req.body.userpass;
+    var no_hp = req.body.no_hp;
+
+    tb_user.register(useremail, username, userpass, no_hp, function (err, result) {
+        if (!err) {
+            console.log(result);
+            res.send(result.affectedRows + ' record ditambahkan ');
+        }
+        else {
+            console.log(err);
+            res.send(err);
+        }
+    })
+})
+
 module.exports = app
